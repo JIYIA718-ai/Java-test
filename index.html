@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>谁最帅？</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    font-family: "楷体", "KaiTi", serif;
+    background: #fff;
+  }
+  .label, .btn {
+    position: absolute;
+    font-family: "楷体", "KaiTi", serif;
+  }
+  .btn {
+    cursor: pointer;
+    padding: 2px 8px;
+  }
+  .title {
+    font-size: 30px;
+    left: 50px;
+    top: 20px;
+  }
+  /* 把 Tkinter 的坐标转成 CSS（Tkinter 的 y 值这里直接沿用） */
+</style>
+</head>
+<body>
+
+<div class="label title">下面四个人中谁最帅？</div>
+
+<div class="label" style="left:100px; top:100px; font-size:30px;">胡佳昊</div>
+<button class="btn" style="left:70px; top:110px;" onclick="rand()">A</button>
+
+<div class="label" style="left:100px; top:200px; font-size:30px;">彭于晏</div>
+<button class="btn" style="left:70px; top:210px;" onclick="bad()">B</button>
+
+<div class="label" style="left:100px; top:300px; font-size:30px;">吴彦祖</div>
+<button class="btn" style="left:70px; top:310px;" onclick="bad()">C</button>
+
+<div class="label" style="left:100px; top:400px; font-size:30px;">张凌赫</div>
+<button class="btn" style="left:70px; top:410px;" onclick="bad()">D</button>
+
+<script>
+// ===== 对应 Python 的 rand() =====
+function rand() {
+  const x = Math.floor(Math.random() * 1201); // randint(0,1200)
+  const y = Math.floor(Math.random() * 1201);
+  const size = Math.floor(Math.random() * 186) + 15; // randint(15,200)
+
+  const textA = document.createElement("div");
+  textA.className = "label";
+  textA.textContent = "很有眼光";
+  textA.style.fontSize = size + "px";
+  textA.style.color = "green";
+  textA.style.left = x + "px";
+  textA.style.top = y + "px";
+  document.body.appendChild(textA);
+
+  // after(1000, destroy) —— 1秒后移除
+  setTimeout(() => textA.remove(), 1000);
+
+  // after(50, rand) —— 50毫秒后递归，制造"刷屏"效果
+  setTimeout(rand, 50);
+}
+
+// ===== 对应 Python 的 bad() =====
+let i = 0;
+function bad() {
+  i += 1;
+  let msg, size;
+
+  if (i === 1) {
+    msg = "再想想？";
+    size = 30;
+  } else if (i === 2) {
+    msg = "好好想想！";
+    size = 50;
+  } else {
+    msg = "认真点！！！";
+    size = 100;
+  }
+
+  const nem = document.createElement("div");
+  nem.className = "label";
+  nem.textContent = msg;
+  nem.style.fontSize = size + "px";
+  nem.style.background = "red";
+  nem.style.left = "350px";
+  nem.style.top = "300px";
+  document.body.appendChild(nem);
+
+  // after(500, destroy)
+  setTimeout(() => nem.remove(), 500);
+}
+</script>
+
+</body>
+</html>
